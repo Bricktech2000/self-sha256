@@ -10,7 +10,7 @@ char data[] =
 "#define SHA256_BLOCK_SIZE (512 / 8)\n"
 "#define SHA256_HASH_SIZE (256 / 8)\n"
 "\n"
-"struct SHA256Ctx {\n"
+"struct sha256_ctx {\n"
 "  uint64_t nblocks;\n"
 "  uint32_t hash[8];\n"
 "  uint8_t buflen;\n"
@@ -47,12 +47,12 @@ char data[] =
 "\n"
 "static const uint8_t padding[SHA256_BLOCK_SIZE] = {0x00};\n"
 "\n"
-"void sha256_init(struct SHA256Ctx *ctx) {\n"
+"void sha256_init(struct sha256_ctx *ctx) {\n"
 "  ctx->nblocks = ctx->buflen = 0;\n"
 "  memcpy(ctx->hash, H0, sizeof(H0));\n"
 "}\n"
 "\n"
-"void sha256_update(struct SHA256Ctx *ctx, const uint8_t *data, size_t len) {\n"
+"void sha256_update(struct sha256_ctx *ctx, const uint8_t *data, size_t len) {\n"
 "  size_t i = -1;\n"
 "  goto precheck;\n"
 "  for (; i < len; i++) {\n"
@@ -86,7 +86,7 @@ char data[] =
 "  }\n"
 "}\n"
 "\n"
-"uint8_t *sha256_final(struct SHA256Ctx *ctx) {\n"
+"uint8_t *sha256_final(struct sha256_ctx *ctx) {\n"
 "  uint64_t nbits = (ctx->nblocks * SHA256_BLOCK_SIZE + ctx->buflen) * 8;\n"
 "\n"
 "  ctx->buf[ctx->buflen++] = 0x80;\n"
@@ -118,7 +118,7 @@ char data[] =
 "char postfix[] = \"\\\";\\n\\n\";\n"
 "\n"
 "int main(void) {\n"
-"  struct SHA256Ctx ctx;\n"
+"  struct sha256_ctx ctx;\n"
 "  sha256_init(&ctx);\n"
 "\n"
 "  sha256_update(&ctx, (uint8_t *)prefix, sizeof(prefix) - 1);\n"
@@ -158,7 +158,7 @@ char data[] =
 #define SHA256_BLOCK_SIZE (512 / 8)
 #define SHA256_HASH_SIZE (256 / 8)
 
-struct SHA256Ctx {
+struct sha256_ctx {
   uint64_t nblocks;
   uint32_t hash[8];
   uint8_t buflen;
@@ -195,12 +195,12 @@ static const uint32_t H0[8] = {
 
 static const uint8_t padding[SHA256_BLOCK_SIZE] = {0x00};
 
-void sha256_init(struct SHA256Ctx *ctx) {
+void sha256_init(struct sha256_ctx *ctx) {
   ctx->nblocks = ctx->buflen = 0;
   memcpy(ctx->hash, H0, sizeof(H0));
 }
 
-void sha256_update(struct SHA256Ctx *ctx, const uint8_t *data, size_t len) {
+void sha256_update(struct sha256_ctx *ctx, const uint8_t *data, size_t len) {
   size_t i = -1;
   goto precheck;
   for (; i < len; i++) {
@@ -234,7 +234,7 @@ void sha256_update(struct SHA256Ctx *ctx, const uint8_t *data, size_t len) {
   }
 }
 
-uint8_t *sha256_final(struct SHA256Ctx *ctx) {
+uint8_t *sha256_final(struct sha256_ctx *ctx) {
   uint64_t nbits = (ctx->nblocks * SHA256_BLOCK_SIZE + ctx->buflen) * 8;
 
   ctx->buf[ctx->buflen++] = 0x80;
@@ -266,7 +266,7 @@ char prefix[] = "char data[] =\n\"";
 char postfix[] = "\";\n\n";
 
 int main(void) {
-  struct SHA256Ctx ctx;
+  struct sha256_ctx ctx;
   sha256_init(&ctx);
 
   sha256_update(&ctx, (uint8_t *)prefix, sizeof(prefix) - 1);
