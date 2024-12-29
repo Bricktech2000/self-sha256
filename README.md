@@ -8,7 +8,7 @@ To generate the `data[]` buffer from the source code, use [stringify.vim](string
 
 ## Usage
 
-```bash
+```sh
 make build
 bin/self-sha256
 sha256sum self-sha256.c
