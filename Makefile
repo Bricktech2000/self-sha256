@@ -1,6 +1,13 @@
-build:
-	mkdir -p bin
-	gcc -O2 -Wall -Wextra -Wpedantic -Wno-parentheses -Wno-overlength-strings -std=c99 self-sha256.c -o bin/self-sha256
+CC=gcc
+CFLAGS=-O2 -Wall -Wextra -Wpedantic -std=c99
+
+all: bin/self-sha256
+
+bin/self-sha256: self-sha256.c | bin/
+	$(CC) $(CFLAGS) -Wno-parentheses -Wno-overlength-strings $^ -o $@
+
+bin/:
+	mkdir bin/
 
 clean:
-	rm -rf bin
+	rm -rf bin/
