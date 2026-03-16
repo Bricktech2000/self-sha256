@@ -55,7 +55,7 @@ char data[] =
 "\n"
 "void sha256_init(struct sha256_ctx *ctx) {\n"
 "  ctx->nblocks = ctx->buflen = 0;\n"
-"  memcpy(ctx->hash, H0, sizeof(H0));\n"
+"  memcpy(ctx->hash, H0, sizeof H0);\n"
 "}\n"
 "\n"
 "void sha256_update(struct sha256_ctx *ctx, const uint8_t *data, size_t len) {\n"
@@ -128,7 +128,7 @@ char data[] =
 "  struct sha256_ctx ctx;\n"
 "  sha256_init(&ctx);\n"
 "\n"
-"  sha256_update(&ctx, (uint8_t *)prefix, sizeof(prefix) - 1);\n"
+"  sha256_update(&ctx, (uint8_t *)prefix, sizeof prefix - 1);\n"
 "  for (char *p = data; *p; p++) {\n"
 "    switch (*p) {\n"
 "    case '\\\\':\n"
@@ -144,8 +144,8 @@ char data[] =
 "      sha256_update(&ctx, (uint8_t *)p, 1);\n"
 "    }\n"
 "  }\n"
-"  sha256_update(&ctx, (uint8_t *)postfix, sizeof(postfix) - 1);\n"
-"  sha256_update(&ctx, (uint8_t *)data, sizeof(data) - 1);\n"
+"  sha256_update(&ctx, (uint8_t *)postfix, sizeof postfix - 1);\n"
+"  sha256_update(&ctx, (uint8_t *)data, sizeof data - 1);\n"
 "\n"
 "  uint8_t *digest = sha256_final(&ctx);\n"
 "  for (int i = 0; i < SHA256_HASH_SIZE; i++)\n"
@@ -210,7 +210,7 @@ static const uint32_t H0[8] = {
 
 void sha256_init(struct sha256_ctx *ctx) {
   ctx->nblocks = ctx->buflen = 0;
-  memcpy(ctx->hash, H0, sizeof(H0));
+  memcpy(ctx->hash, H0, sizeof H0);
 }
 
 void sha256_update(struct sha256_ctx *ctx, const uint8_t *data, size_t len) {
@@ -283,7 +283,7 @@ int main(void) {
   struct sha256_ctx ctx;
   sha256_init(&ctx);
 
-  sha256_update(&ctx, (uint8_t *)prefix, sizeof(prefix) - 1);
+  sha256_update(&ctx, (uint8_t *)prefix, sizeof prefix - 1);
   for (char *p = data; *p; p++) {
     switch (*p) {
     case '\\':
@@ -299,8 +299,8 @@ int main(void) {
       sha256_update(&ctx, (uint8_t *)p, 1);
     }
   }
-  sha256_update(&ctx, (uint8_t *)postfix, sizeof(postfix) - 1);
-  sha256_update(&ctx, (uint8_t *)data, sizeof(data) - 1);
+  sha256_update(&ctx, (uint8_t *)postfix, sizeof postfix - 1);
+  sha256_update(&ctx, (uint8_t *)data, sizeof data - 1);
 
   uint8_t *digest = sha256_final(&ctx);
   for (int i = 0; i < SHA256_HASH_SIZE; i++)
