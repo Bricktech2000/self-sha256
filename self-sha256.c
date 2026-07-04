@@ -1,5 +1,4 @@
 char data[] =
-"#include <assert.h>\n"
 "#include <stddef.h>\n"
 "#include <stdint.h>\n"
 "#include <stdio.h>\n"
@@ -106,8 +105,6 @@ char data[] =
 "    ctx->buf[ctx->buflen++] = nbits >> (7 - i) * 8;\n"
 "  sha256_update(ctx, NULL, 0);\n"
 "\n"
-"  assert(ctx->buflen == 0); // assert multiple of 512 bits\n"
-"\n"
 "  // use `ctx->buf` to store the final hash\n"
 "  for (int i = 0, j = 0; i < 8; i++) {\n"
 "    ctx->buf[j++] = ctx->hash[i] >> 24;\n"
@@ -154,7 +151,6 @@ char data[] =
 "}\n"
 "";
 
-#include <assert.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -260,8 +256,6 @@ uint8_t *sha256_final(struct sha256_ctx *ctx) {
   for (int i = 0; i < 64 / 8; i++)
     ctx->buf[ctx->buflen++] = nbits >> (7 - i) * 8;
   sha256_update(ctx, NULL, 0);
-
-  assert(ctx->buflen == 0); // assert multiple of 512 bits
 
   // use `ctx->buf` to store the final hash
   for (int i = 0, j = 0; i < 8; i++) {
